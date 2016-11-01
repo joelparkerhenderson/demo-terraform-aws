@@ -1,0 +1,67 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Action": [
+                "ec2:RunInstances",
+                "ec2:StartInstances"
+            ],
+            "Effect": "Allow",
+            "Resource": [
+                "arn:aws:ec2:::instance/*",
+                "arn:aws:ec2:::network-interface/eni-hexadeci",
+                "arn:aws:ec2:::subnet/subnet-hexadeci",
+                "arn:aws:ec2:::security-group/sg-hexadeci",
+                "arn:aws:ec2:::key-pair/name_of_key",
+                "arn:aws:ec2:region::image/ami-hexadeci"
+            ]
+        },
+        {
+            "Action": [
+                "ec2:Describe*",
+                "ec2:CreateTags",
+                "ec2:CreateVolume",
+                "ec2:RegisterImage",
+                "ec2:CreateImage",
+                "ec2:CopyImage",
+                "ec2:CreateSnapshot",
+                "ec2:DeleteSnapshot",
+                "ec2:DetachVolume",
+                "ec2:ModifyImageAttribute"
+            ],
+            "Effect": "Allow",
+            "Resource": "*"
+        },
+        {
+            "Action": [
+                "ec2:StopInstances",
+                "ec2:TerminateInstances"
+            ],
+            "Condition": {
+                "StringEquals": {
+                    "ec2:ResourceTag/provisioned_by": "ci"
+                }
+            },
+            "Effect": "Allow",
+            "Resource": "*"
+        },
+        {
+            "Action": [
+                "ec2:StopInstances",
+                "ec2:TerminateInstances"
+            ],
+            "Condition": {
+                "StringLike": {
+                    "ec2:ResourceTag/environment": [
+                        "prod",
+                        "qa",
+                        "stage",
+                        "automation"
+                    ]
+                }
+            },
+            "Effect": "Deny",
+            "Resource": "*"
+        }
+    ]
+}
