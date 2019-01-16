@@ -1,5 +1,7 @@
 # Demo of Terraform by HashiCorp for AWS
 
+<img src="README.png" alt="Terraform" style="width: 100%;"/>
+
 Contents:
 
 * [AWS setup](#aws-setup)
