@@ -31,6 +31,14 @@ Get an AWS account, if you don't already have one:
   * Sign up.
   
 
+### Get AWS command line software (optional)
+
+If you want, you can install Python, PIP, and AWS on macOS:
+
+    brew install python
+    pip install awscli --upgrade --user
+
+
 ### Get your AWS security credentials
 
 Get your AWS security credentials, if you don't already have them.
@@ -38,7 +46,6 @@ Get your AWS security credentials, if you don't already have them.
   * When you sign in the AWS website, the AWS console shows your username in the upper right. 
 
   * Click your username. You see a dropdown menu. Click "Security Credentials". 
-
   * If this is your first time using AWS, or if you are still using old-style credentials, then you may see a dialog box asking you to switch to best practices using AWS IAM; click the IAM button.
 
 
