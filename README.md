@@ -35,16 +35,23 @@ Get an AWS account, if you don't already have one:
 
 To install AWS CIO on macOS via brew:
 
-    $ brew update && brew install awscli
+```sh
+$ brew update && brew install awscli
+```
 
 To install AWS CLI via python pip:
 
-    $ pip install awscli --upgrade --user
+```sh
+$ pip install awscli --upgrade --user
+```
 
 Verify:
 
-    $ aws --version
-    aws-cli/1.15.30 Python/3.6.5 Darwin/17.7.0 botocore/1.10.30
+```sh
+$ aws --version
+aws-cli/1.15.30 Python/3.6.5 Darwin/17.7.0 botocore/1.10.30
+```
+
 
 ### Get your AWS security credentials
 
@@ -69,10 +76,13 @@ You can run this demo by using any AWS user you want.
 
   * Enter the user name "demo_terraform" then check the box "Generate an access key for each user".
 
-  * Click "Show User Security Credentials" and copy the info, which looks like this:
+  * Click "Show User Security Credentials" and copy the info, which looks like the info below.
 
-      Access Key ID: 6IAIN7RHCYWDYJAHV8LS
-      Secret Access Key: OJif8/L9UgHqfJzkO3RDqEcypvWkilfkfe8N5YOO
+Example credentials:
+```txt
+Access Key ID: 6IAIN7RHCYWDYJAHV8LS
+Secret Access Key: OJif8/L9UgHqfJzkO3RDqEcypvWkilfkfe8N5YOO
+```
 
 
 ### Create an AWS IAM policy (optional)
@@ -151,10 +161,9 @@ Typical commands:
 
   * `terraform show` prints the results file.
 
-  * Caveat: when I ran `terraform apply` then I saw error messages; I needed to choose a different region, AMI, instance type, and IAM security policy. See [Terraform AWS troubleshooting](aws/troubleshooting.md)
+  * Caveat: when I ran `terraform apply` then I saw error messages; I needed to choose a different region, AMI, instance type, and IAM security policy.
 
 Congratulations, you're up and running!
-# Troubleshooting
 
 
 ## Troubleshooting
@@ -168,12 +177,16 @@ Issue: `terraform apply` failed due to VPC resource not specified.
 
   * See this issue: https://github.com/hashicorp/terraform/issues/4367
 
-  * Workaround is to change to an AMI and instance that do not need a VPC, such as:
+  * Workaround is to change to an AMI and instance that do not need a VPC.
 
-      resource "aws_instance" "example" {
-         ami = "ami-408c7f28"
-         instance_type = "t1.micro"
-      }
+Example:
+
+```tf
+resource "aws_instance" "example" {
+  ami = "ami-408c7f28"
+  instance_type = "t1.micro"
+}
+```
 
 
 ### Unauthorized operation
