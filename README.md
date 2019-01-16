@@ -6,13 +6,15 @@ Contents:
 
 * [AWS setup](#aws-setup)
   * [Get your AWS account](#get-your-aws-account)
+  * [Get AWS command line software (optional)](#get-aws-command-line-software-optional)
   * [Get your AWS security credentials](#get-your-aws-security-credentials)
-  * [Get an AWS user](#get-an-aws-user)
+  * [Get your AWS user](#get-your-aws-user)
   * [Create an AWS IAM user (optional)](#create-an-aws-iam-user-optional)
   * [Create an AWS IAM policy (optional)](#create-an-aws-iam-policy-optional)
 * [Terraform setup](#terraform-setup)
   * [Install](#install)
   * [Configure](#configure)
+  * [Initialize](#initialize)
   * [Build](#build)
 * [Troubleshooting](#troubleshooting)
   * [VPC resource not specified](#vpc-resource-not-specified)
@@ -141,6 +143,24 @@ Use the Terraform install page.
 Create a Terraform configuration file.
 
 Our demo configuration file is [demo.tf](demo.tf)
+
+
+### Initialize
+
+Initialize Terraform for the AWS Provider:
+
+```sh
+$ terraform init
+Initializing provider plugins...
+- Checking for available provider plugins on https://releases.hashicorp.com...
+
+$ terraform init
+Initializing provider plugins...
+- Checking for available provider plugins on https://releases.hashicorp.com...
+- Downloading plugin for provider "aws" (1.56.0)...
+...
+Terraform has been successfully initialized!
+```
 
 
 ### Build
