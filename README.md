@@ -1,4 +1,4 @@
-# Demo of Terraform by Hashicorp for Amazon Web Services (AWS)
+# Demo of Terraform by Hashicorp for AWS
 
 You need an AWS account for this demo.
 
