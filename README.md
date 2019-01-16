@@ -33,11 +33,18 @@ Get an AWS account, if you don't already have one:
 
 ### Get AWS command line software (optional)
 
-If you want, you can install Python, PIP, and AWS on macOS:
+To install AWS CIO on macOS via brew:
 
-    brew install python
-    pip install awscli --upgrade --user
+    $ brew update && brew install awscli
 
+To install AWS CLI via python pip:
+
+    $ pip install awscli --upgrade --user
+
+Verify:
+
+    $ aws --version
+    aws-cli/1.15.30 Python/3.6.5 Darwin/17.7.0 botocore/1.10.30
 
 ### Get your AWS security credentials
 
