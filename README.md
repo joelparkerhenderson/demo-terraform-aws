@@ -1,4 +1,4 @@
-# Demo of Terraform by Hashicorp for AWS
+# Demo of Terraform by HashiCorp for AWS
 
 Contents:
 
