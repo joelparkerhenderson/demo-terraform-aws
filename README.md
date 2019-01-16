@@ -135,10 +135,6 @@ Use the Terraform install page.
 
   * Go to https://www.terraform.io/intro/getting-started/install.html
 
-  * Caveat: When I try to install Terraform on a MacBook with macOS by using `brew install terraform`, then the brew tool warns me that this is not yet supported. 
-
-  * Workaround on Mac: download the Mac binary, unzip it, and move the `terraform` binary to somewhere convenient; I move it to my `/usr/local/bin` directory, which already on my path.
-
 
 ### Configure
 
