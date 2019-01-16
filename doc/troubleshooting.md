@@ -1,4 +1,4 @@
-# Terraform AWS troubleshooting
+# Troubleshooting
 
 
 ## VPC resource not specified

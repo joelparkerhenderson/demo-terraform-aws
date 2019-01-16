@@ -1,4 +1,4 @@
-# Terraform AWS setup
+# Setup
 
 
 ## Get your credentials
@@ -60,7 +60,7 @@ Option 2 - choose a custom policy:
 
   * Policy Name: demo_terraform_policy (or anything you want)
 
-  * Policy Document: create the policy you want, such as [these examples](aws/policies)
+  * Policy Document: create the policy you want, such as [these examples](policies)
 
   * Click the button "Validate Policy". If it's not valid, then keep working on it; do not apply it.
 
