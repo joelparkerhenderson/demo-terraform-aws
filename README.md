@@ -16,6 +16,8 @@ Contents:
   * [Configure](#configure)
   * [Initialize](#initialize)
   * [Build](#build)
+  * [Plan](#plan)
+  * [Congratulations](#congratulations)
 * [Troubleshooting](#troubleshooting)
   * [VPC resource not specified](#vpc-resource-not-specified)
   * [Unauthorized operation](#unauthorized-operation)
@@ -178,6 +180,24 @@ Typical commands:
   * `terraform show` prints the results file.
 
   * Caveat: when I ran `terraform apply` then I saw error messages; I needed to choose a different region, AMI, instance type, and IAM security policy.
+
+
+### Plan
+
+Plan example:
+
+```sh
+$ terraform plan
+Refreshing Terraform state in-memory prior to plan...
+...
+Terraform will perform the following actions:
+...
+Plan: 1 to add, 0 to change, 0 to destroy.
+...
+```
+
+
+### Congratulations
 
 Congratulations, you're up and running!
 
