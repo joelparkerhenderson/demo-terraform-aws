@@ -43,6 +43,34 @@ provider "aws" {
   #region = "us-east-1"
 }
 
+##
+#
+# IAM users
+#
+##
+
+# Create our primary user, which we call "Commanding Officer".
+# For your setup, customize this for your own primary user,
+# such as a person in your organization who heads your team.
+resource "aws_iam_user" "co" {
+  name = "co"
+  tags = {
+    name = "Commanding Officer"
+    email = "co@nonprofitnetworks.org"
+  }
+}
+
+# Create our secondary user, which we call "Executive Officer".
+# For your setup, customize this for your own secondary user.
+# such as a person in your organization who helps your team.
+resource "aws_iam_user" "xo" {
+  name = "xo"
+  tags = {
+    name = "Executive Officer"
+    email = "xo@nonprofitnetworks.org"
+  }
+}
+
 resource "aws_instance" "example" {
   # For our EC2 instance, we specify an AMI for Ubuntu, 
   # a "t2.micro" instance, so we can use the free tier.
