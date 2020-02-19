@@ -19,6 +19,7 @@ terraform {
 }
 
 provider "aws" {
+  version = "~> 2.43.0"
   # Terraform needs to know the AWS credentials:
   #
   #   * access_key
