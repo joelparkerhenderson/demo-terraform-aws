@@ -198,6 +198,42 @@ resource "aws_security_group" "demo_security_group" {
 
 }
 
+##
+#
+# AMIs
+#
+##
+
+# Define local variables, such as for Canonical, the maker of Ubuntu.
+# This variable enables us to search AMIs for ones made by Canonical.
+# We use our preferred naming convention of a single-underscore to 
+# separate words, and a double-underscore to separate concepts.
+# You can use any variable you want, and any naming convention.
+locals {
+  aws_ami__owner__canonical = "099720109477"
+}
+
+# Look up the Amazon Machine Image (AMI) number of a recent Ubuntu OS.
+# For our teaching purposes, we favor Ubuntu over alternatives such as
+# Apine because many of our developers already use Ubuntu locally, and
+# we favor the most-recent version over long term support (LTS) because
+# many of our developers already use the most-recent version locally.
+data "aws_ami" "ubuntu" {
+  most_recent = true
+
+  filter {
+    name   = "name"
+    values = ["ubuntu/images/hvm-ssd/ubuntu-eoan-19.10-amd64-server-*"]
+  }
+
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+
+  owners = [aws_ami_owner_id_of_canonical]
+}
+
 resource "aws_instance" "example" {
   # For our EC2 instance, we specify an AMI for Ubuntu, 
   # a "t2.micro" instance, so we can use the free tier.
