@@ -231,7 +231,7 @@ data "aws_ami" "ubuntu" {
     values = ["hvm"]
   }
 
-  owners = [aws_ami_owner_id_of_canonical]
+  owners = [local.aws_ami__owner__canonical]
 }
 
 ##
