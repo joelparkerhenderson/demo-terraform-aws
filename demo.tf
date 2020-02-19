@@ -104,6 +104,52 @@ resource "aws_key_pair" "administrator" {
   public_key = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAmXB4ltuJqH7xOUYOwkY9O4H4Wkd5+fDzhWbCeD3vnIYJB7j+V0M9/4b1wLXOZyZkyxvYkaxKdRy0Q41esWp7KaOHgmAHeIXZyXyXdKoofylDilxG1wRx0/b03scdnO5jNIof+Otp/8z57Y2xzr+pqbWGal6D/8VGLyykOKrGFGNft+2mOsAquOnKoZ1siIK44tkPt7D2LfQp+PrckKEQ5TSAvXTisRbQxF3VRJePf6cCADLYwShza8GKJrK+vUVo2GNJ9Pn4yvT9L2zUa0eYflHeq4799045meqY+Jn/Y+IOYN0dEDsWEv7sqMgjzmC1fm/Pp/hWjUDXXo++r0ir9wIDAQAB"
 }
 
+##
+#
+# Network etc.
+#
+##
+
+# Connect to our existing AWS default virtual public cloud (VPC).
+# If your AWS doesn't have a default VPC, then you can either omit
+# this block, or use the AWS console (or API) to create a default VPC.
+resource "aws_default_vpc" "default" {
+  tags = {
+    Name = "default"
+  }
+}
+
+# Create a VPC named "main" that we use for general needs.
+resource "aws_vpc" "main" {
+  cidr_block = "10.0.0.0/16"
+
+  tags = {
+    Name = "main"
+  }
+}
+
+# Create a subnet named "main_public" that we use for extranet needs,
+# where we want public access, such as a public-facing webserver.
+resource "aws_subnet" "main_public" {
+  vpc_id     = aws_vpc.main.id
+  cidr_block = "10.0.0.0/24"
+
+  tags = {
+    Name = "main_public"
+  }
+}
+
+# Create a subnet named "main_private" that we use for intranet needs,
+# where we want internal access, such as an inside-facing webserver.
+resource "aws_subnet" "main_private" {
+  vpc_id     = aws_vpc.main.id
+  cidr_block = "10.0.1.0/24"
+
+  tags = {
+    Name = "main_private"
+  }
+}
+
 resource "aws_instance" "example" {
   # For our EC2 instance, we specify an AMI for Ubuntu, 
   # a "t2.micro" instance, so we can use the free tier.
