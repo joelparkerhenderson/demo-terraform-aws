@@ -1,3 +1,23 @@
+##
+#
+# Terraform file with helpful annotations.
+#
+# This file has many annotations to explain how to use it.
+# When you're creating you own systems, then you customize
+# this file for your own purposes, with your own settings.
+#
+# We welcome questions and constructive feedback.
+#
+##
+
+# The file starts with the `terraform` block configuration.
+terraform {
+  required_version = ">= 0.12.18"
+  backend "local" {
+    path = "terraform.tfstate"
+  }
+}
+
 provider "aws" {
   # Terraform needs to know the AWS credentials:
   #
