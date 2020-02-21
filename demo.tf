@@ -97,8 +97,26 @@ resource "aws_iam_group_policy_attachment" "nonprofitnetworks_default_group_poli
 #
 #     terraform import aws_key_pair.administrator administrator
 #
+# To convert a AWS *.pem file to the resource's `public_key` format:
+#
+#     openssl rsa -in example.pem -pubout
+#
+# If you get this error message:
+#
+#     Error import KeyPair: InvalidKey.Format: 
+#     Key is not in valid OpenSSH public key format
+#
+# Then you need to generate the correct format of the public key.
+# Be sure you used the `openssh` command to create the public key.
+#
 # We use this key pair for our default needs, such as SSH to an instance.
 # Our public key below won't work for you, so you'll want to change it.
+#
+# To try using SSH, such as with a file `example.pem`, to a machine
+# that has a username `ubuntu` and the IP address `12.34.56.78`:
+#
+#     ssh -i example.pem ubuntu@12.34.56.78
+#
 resource "aws_key_pair" "administrator" {
   key_name   = "administrator"
   public_key = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAmXB4ltuJqH7xOUYOwkY9O4H4Wkd5+fDzhWbCeD3vnIYJB7j+V0M9/4b1wLXOZyZkyxvYkaxKdRy0Q41esWp7KaOHgmAHeIXZyXyXdKoofylDilxG1wRx0/b03scdnO5jNIof+Otp/8z57Y2xzr+pqbWGal6D/8VGLyykOKrGFGNft+2mOsAquOnKoZ1siIK44tkPt7D2LfQp+PrckKEQ5TSAvXTisRbQxF3VRJePf6cCADLYwShza8GKJrK+vUVo2GNJ9Pn4yvT9L2zUa0eYflHeq4799045meqY+Jn/Y+IOYN0dEDsWEv7sqMgjzmC1fm/Pp/hWjUDXXo++r0ir9wIDAQAB"
