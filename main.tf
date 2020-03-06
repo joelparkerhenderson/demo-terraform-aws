@@ -85,7 +85,7 @@ resource "aws_iam_group" "nonprofitnetworks_default_group" {
 }
 
 # Create a default group policy for our organization.
-# We recommend including at least the polict to change password.
+# We recommend including at least the policy to change password.
 # You will likely want to customize this for your purposes.
 resource "aws_iam_group_policy_attachment" "nonprofitnetworks_default_group_policy_attachment" {
   group = aws_iam_group.nonprofitnetworks_default_group.name
@@ -105,7 +105,7 @@ resource "aws_ses_domain_identity" "nonprofitnetworks_org" {
 data "aws_iam_policy_document" "nonprofitnetworks_org" {
   statement {
     actions   = ["SES:SendEmail", "SES:SendRawEmail"]
-    resources = ["${nonprofitnetworks_org.example.arn}"]
+    resources = [aws_ses_domain_identity.nonprofitnetworks_org.arn]
 
     principals {
       identifiers = ["*"]
@@ -376,5 +376,59 @@ resource "aws_instance" "demo" {
     sudo apt-get -q -y --purge autoremove
     
 	EOF
+
+}
+
+##
+#
+# Database
+#
+##
+
+resource "aws_db_instance" "demo" {
+
+  # The name of the RDS instance, if omitted, Terraform will assign a random, unique identifier. 
+  identifier = "demo_rds"
+
+  # The name of the database to create when the DB instance is created. 
+  name = "demo_db"
+
+  # The RDS instance class.
+  instance_class       = "db.t2.micro"
+
+  # The allocated storage in gibibytes. 
+  allocated_storage    = 20
+
+  # The database engine.
+  engine               = "aurora-postgresql"
+
+  # The master account username and password.
+  # Note that these settings may show up in logs, 
+  # and will be stored in the state file in raw text.
+  # We strongly recommend doing this differently if you
+  # are building a production system or secure system.
+  username             = "postgres"
+  password             = "cc38f91c340473c43b160aec6c559e0e"
+
+  # We like to use the database with public tools such as DB admin apps.
+  publicly_accessible = "true"
+
+  # We like performance insights, which help us optimize the data use.
+  performance_insights_enabled = "true"
+
+  # We like to have the demo database update to the current version.
+  allow_major_version_upgrade = "true"
+
+  # We like backup retention for as long as possible.
+  backup_retention_period = "35"
+
+  # Backup window time in UTC is in the middle of the night in the United States.
+  backup_window = "08:00-09:00"
+
+  # We prefer to preserve the backups if the database is accidentally deleted.
+  delete_automated_backups = "false"
+
+  # Maintenance window is after backup window and in the middle of the night.
+  maintenance_window = "09:00-10:00"
 
 }
