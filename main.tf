@@ -240,8 +240,13 @@ resource "aws_security_group" "demo_security_group" {
 
 ##
 #
-# AMIs
+# AMI: Amazon Machine Image
 #
+# For our teaching purposes, we favor Ubuntu over alternatives such
+# as Apine because many of our developers already use Ubuntu locally.
+#
+# We favor the current version and the long term support (LTS) version,
+# depending on whether the goal is freshest OS or production OS.
 ##
 
 # Define local variables, such as for Canonical, the maker of Ubuntu.
@@ -253,13 +258,10 @@ locals {
   aws_ami__owner__canonical = "099720109477"
 }
 
-# Look up the Amazon Machine Image (AMI) number of a recent Ubuntu OS.
-# For our teaching purposes, we favor Ubuntu over alternatives such as
-# Apine because many of our developers already use Ubuntu locally, and
-# we favor the most-recent version over long term support (LTS) because
-# many of our developers already use the most-recent version locally.
-data "aws_ami" "ubuntu" {
+# Look up the AMI id of the current Ubuntu OS.
+data "aws_ami" "ubuntu_with_current_version" {
   most_recent = true
+  owners = [local.aws_ami__owner__canonical]
 
   filter {
     name   = "name"
@@ -270,8 +272,22 @@ data "aws_ami" "ubuntu" {
     name   = "virtualization-type"
     values = ["hvm"]
   }
+}
 
+# Look up the AMI id of the current Ubuntu Long Term Support (LTS) OS.
+data "aws_ami" "ubuntu_with_long_term_support_version" {
+  most_recent = true
   owners = [local.aws_ami__owner__canonical]
+
+  filter {
+    name   = "name"
+    values = ["ubuntu/images/hvm-ssd/ubuntu-bionic-18.04-amd64-server-*"]
+  }
+
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
 }
 
 ##
@@ -288,7 +304,7 @@ locals {
 
 # Create an EC2 instance, using our existing key pair from above.
 resource "aws_instance" "demo" {
-  ami = data.aws_ami.ubuntu.id
+  ami = data.aws_ami.ubuntu_with_current_version.id
   instance_type = local.free__aws_instance__instance_type
   associate_public_ip_address = true
   key_name = "administrator"
