@@ -73,6 +73,24 @@ resource "aws_iam_user" "xo" {
 
 ##
 #
+# Password policy
+#
+##
+
+# We currently set this via the console.
+# We want to find out how to set this via Terraform.
+#
+#   * Minimum password length is 12 characters
+#   * Require at least one uppercase letter from Latin alphabet (A-Z)
+#   * Require at least one lowercase letter from Latin alphabet (a-Z)
+#   * Require at least one number
+#   * Require at least one non-alphanumeric character (!@#$%^&*()_+-=[]{}|')
+#   * Allow users to change their own password
+#   * Remember last 5 password(s) and prevent reuse 
+#   * Do not expire passwords
+
+##
+#
 # Identity etc.
 #
 ##
