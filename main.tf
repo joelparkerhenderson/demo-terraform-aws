@@ -428,7 +428,7 @@ resource "aws_db_instance" "demo" {
   # We prefer to preserve the backups if the database is accidentally deleted.
   delete_automated_backups = "false"
 
-  # Maintenance window is after backup window and in the middle of the night.
-  maintenance_window = "09:00-10:00"
+  # Maintenance window is after backup window, and on Sunday, and in the middle of the night.
+  maintenance_window = "sun:09:00-sun:10:00"
 
 }
