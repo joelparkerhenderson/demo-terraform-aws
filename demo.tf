@@ -92,6 +92,28 @@ resource "aws_iam_group_policy_attachment" "nonprofitnetworks_default_group_poli
   policy_arn = "arn:aws:iam::aws:policy/IAMUserChangePassword"
 }
 
+##
+#
+# Mail
+#
+##
+
+resource "aws_ses_domain_identity" "nonprofitnetworks_org" {
+  domain = "nonprofitnetworks.org"
+}
+
+data "aws_iam_policy_document" "nonprofitnetworks_org" {
+  statement {
+    actions   = ["SES:SendEmail", "SES:SendRawEmail"]
+    resources = ["${nonprofitnetworks_org.example.arn}"]
+
+    principals {
+      identifiers = ["*"]
+      type        = "AWS"
+    }
+  }
+}
+
 # Use an existing key pair that we created via the the AWS console.
 # We named the key pair `administrator`, and we import it like this:
 #
