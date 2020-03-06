@@ -387,8 +387,10 @@ resource "aws_instance" "demo" {
 
 resource "aws_db_instance" "demo" {
 
-  # The name of the RDS instance, if omitted, Terraform will assign a random, unique identifier. 
-  identifier = "demo_rds"
+  # The name of the RDS instance.
+  # Letters and hyphens are allowed; underscores are not.
+  # Terraform default is  a random, unique identifier. 
+  identifier = "demo-rds"
 
   # The name of the database to create when the DB instance is created. 
   name = "demo_db"
