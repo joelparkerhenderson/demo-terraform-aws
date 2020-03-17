@@ -261,7 +261,7 @@ resource "aws_security_group" "demo_security_group" {
 # AMI: Amazon Machine Image
 #
 # For our teaching purposes, we favor Ubuntu over alternatives such
-# as Apine because many of our developers already use Ubuntu locally.
+# as Alpine because many of our developers already use Ubuntu locally.
 #
 # We favor the current version and the long term support (LTS) version,
 # depending on whether the goal is freshest OS or production OS.
