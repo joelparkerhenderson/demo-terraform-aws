@@ -341,7 +341,7 @@ resource "aws_instance" "demo" {
   # Install some typical software, by using the typical package manager.
   # You will likely want to customize this section for your own purposes.
   user_data = <<EOF
-		#!/bin/sh
+    #!/bin/sh
 
     # Update
     sudo apt-get -q -y update
@@ -363,17 +363,17 @@ resource "aws_instance" "demo" {
     sudo apt-get install -q -y default-jdk
     sudo apt-get install -q -y emacs
     sudo apt-get install -q -y fd-find
-		sudo apt-get install -q -y git
+    sudo apt-get install -q -y git
     sudo apt-get install -q -y git-core 
-		sudo apt-get install -q -y htop
-		sudo apt-get install -q -y jq
-		sudo apt-get install -q -y nginx
+    sudo apt-get install -q -y htop
+    sudo apt-get install -q -y jq
+    sudo apt-get install -q -y nginx
     sudo apt-get install -q -y openssl
     sudo apt-get install -q -y python3.6
     sudo apt-get install -q -y ripgrep
- 		sudo apt-get install -q -y ruby
- 		sudo apt-get install -q -y tmux
- 		sudo apt-get install -q -y vim
+    sudo apt-get install -q -y ruby
+    sudo apt-get install -q -y tmux
+    sudo apt-get install -q -y vim
     sudo apt-get install -q -y wget
 
     # Node-related
@@ -393,7 +393,7 @@ resource "aws_instance" "demo" {
     sudo apt-get -q -y autoclean
     sudo apt-get -q -y --purge autoremove
     
-	EOF
+  EOF
 
 }
 
