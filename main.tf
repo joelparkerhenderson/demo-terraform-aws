@@ -120,15 +120,6 @@ data "aws_iam_policy_document" "nonprofitnetworks_org" {
 #
 ##
 
-# Connect to our existing AWS default virtual public cloud (VPC).
-# If your AWS doesn't have a default VPC, then you can either omit
-# this block, or use the AWS console (or API) to create a default VPC.
-resource "aws_default_vpc" "default" {
-  tags = {
-    Name = "default"
-  }
-}
-
 # Create a VPC named "main" that we use for general needs.
 resource "aws_vpc" "main" {
   cidr_block = "10.0.0.0/16"
