@@ -1,6 +1,6 @@
 ##
 #
-# Key Pair
+# AWS key pairs
 #
 # To create a key pair via the the AWS console:
 #

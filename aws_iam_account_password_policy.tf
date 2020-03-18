@@ -1,6 +1,6 @@
 ##
 #
-# Password policy
+# AWS IAM account password policy
 #
 # We like to configure a strong password policy.
 #
