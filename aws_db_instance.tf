@@ -4,6 +4,12 @@
 #
 ##
 
+# Define local varibles that notate what the AWS free tier can do.
+locals {
+  aws_db_instance__instance_class__free_tier = "db.t2.micro"
+  aws_db_instance__allocated_storage__free_tier = "20"
+}
+
 resource "aws_db_instance" "demo" {
 
   # The name of the RDS instance.
@@ -15,13 +21,15 @@ resource "aws_db_instance" "demo" {
   name = "demo_db"
 
   # The RDS instance class.
-  instance_class       = "db.t2.micro"
+  # https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.DBInstanceClass.html
+  instance_class       = local.aws_db_instance__instance_class__free_tier
 
   # The allocated storage in gibibytes. 
-  allocated_storage    = 20
+  allocated_storage    = local.aws_db_instance__allocated_storage__free_tier
 
-  # The database engine.
-  engine               = "aurora-postgresql"
+  # The database engine name such as "postgres", "mysql", "aurora", etc.
+  # https://docs.aws.amazon.com/AmazonRDS/latest/APIReference/API_CreateDBInstance.html
+  engine               = "postgres"
 
   # The master account username and password.
   # Note that these settings may show up in logs, 

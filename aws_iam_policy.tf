@@ -1,5 +1,5 @@
 ##
-# Policy
+# AWS IAM policies
 #
 # We import the existing AWS IAM policy name AdmnistratorAccess:
 #
@@ -7,6 +7,7 @@
 ##
 
 resource "aws_iam_policy" "AdministratorAccess" {
+    description = "Provides full access to AWS services and resources."
     policy = <<EOF
 {
     "Version": "2012-10-17",
