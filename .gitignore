@@ -1,3 +1,11 @@
+# SixArm.com .gitgnore
+.*
+!.gitignore
+!.*.gitignore
+!.*[-_.]example
+!.*[-_.]example[-_.]*
+!.*.gpg
+
 # Terraform.gitignore
 # https://github.com/github/gitignore/blob/master/Terraform.gitignore
 
