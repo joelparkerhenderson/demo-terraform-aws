@@ -1,7 +1,2 @@
-variable "aws_db_demo_username" {
-  default = "postgres"
-}
-
-variable "aws_db_demo_password" {
-  default = "secret"
-}
+aws_db_instance__demo__username = "postgres"
+aws_db_instance__demo__password = "secret"

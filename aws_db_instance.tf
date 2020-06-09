@@ -10,21 +10,29 @@ locals {
   aws_db_instance__allocated_storage__free_tier = "20"
 }
 
+variable "aws_db_instance__demo__username" {
+  default = "postgres"
+}
+
+variable "aws_db_instance__demo__password" {
+  default = "secret"
+}
+
 resource "aws_db_instance" "demo" {
 
   # The name of the RDS instance.
   # Letters and hyphens are allowed; underscores are not.
-  # Terraform default is  a random, unique identifier. 
+  # Terraform default is  a random, unique identifier.
   identifier = "demo-rds"
 
-  # The name of the database to create when the DB instance is created. 
+  # The name of the database to create when the DB instance is created.
   name = "demo_db"
 
   # The RDS instance class.
   # https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.DBInstanceClass.html
   instance_class       = local.aws_db_instance__instance_class__free_tier
 
-  # The allocated storage in gibibytes. 
+  # The allocated storage in gibibytes.
   allocated_storage    = local.aws_db_instance__allocated_storage__free_tier
 
   # The database engine name such as "postgres", "mysql", "aurora", etc.
@@ -40,8 +48,8 @@ resource "aws_db_instance" "demo" {
   #
   # These variables are set in the file .env.auto.tfvars
   # and you can see the example ffile .env.example.auto.tfvars.
-  username             = var.aws_db_demo_username  # e.g. "postgres"
-  password             = var.aws_db_demo_password  # e.g. "secret"
+  username             = var.aws_db_instance__demo__username
+  password             = var.aws_db_instance__demo__password
 
   # We like to use the database with public tools such as DB admin apps.
   publicly_accessible = "true"
