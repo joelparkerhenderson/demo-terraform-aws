@@ -32,12 +32,16 @@ resource "aws_db_instance" "demo" {
   engine               = "postgres"
 
   # The master account username and password.
-  # Note that these settings may show up in logs, 
+  # Note that these settings may show up in logs,
   # and will be stored in the state file in raw text.
+  #
   # We strongly recommend doing this differently if you
   # are building a production system or secure system.
-  username             = "postgres"
-  password             = "secret"
+  #
+  # These variables are set in the file .env.auto.tfvars
+  # and you can see the example ffile .env.example.auto.tfvars.
+  username             = var.aws_db_demo_username  # e.g. "postgres"
+  password             = var.aws_db_demo_password  # e.g. "secret"
 
   # We like to use the database with public tools such as DB admin apps.
   publicly_accessible = "true"
