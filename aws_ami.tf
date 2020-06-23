@@ -9,13 +9,22 @@
 # depending on whether the goal is freshest OS or production OS.
 ##
 
-# Define local variables, such as for Canonical, the maker of Ubuntu.
-# This variable enables us to search AMIs for ones made by Canonical.
-# We use our preferred naming convention of a single-underscore to 
+# Define local variables.
+#
+# We use our preferred naming convention of a single-underscore to
 # separate words, and a double-underscore to separate concepts.
 # You can use any variable you want, and any naming convention.
+#
+# We define the AWS AMI owner id numbers of our preferred vendors:
+#
+#   * Canonical (the maker of Ubuntu)
+#
+#   * Fedora (the maker community that creates Fedora AMIs)
+#
+# These variables enable us to search AMIs for ones made by owners.
 locals {
   aws_ami__owner__canonical = "099720109477"
+  aws_ami__owner__fedora = "125523088429"
 }
 
 # Look up the AMI id of the current Ubuntu OS.
@@ -25,7 +34,7 @@ data "aws_ami" "ubuntu_with_current_version" {
 
   filter {
     name   = "name"
-    values = ["ubuntu/images/hvm-ssd/ubuntu-eoan-19.10-amd64-server-*"]
+    values = ["ubuntu/images/hvm-ssd/ubuntu-*-20.04-amd64-server-*"]
   }
 
   filter {
@@ -41,7 +50,7 @@ data "aws_ami" "ubuntu_with_long_term_support_version" {
 
   filter {
     name   = "name"
-    values = ["ubuntu/images/hvm-ssd/ubuntu-bionic-18.04-amd64-server-*"]
+    values = ["ubuntu/images/hvm-ssd/ubuntu-*-20.04-amd64-server-*"]
   }
 
   filter {
