@@ -1,6 +1,6 @@
 ##
 #
-# AWS database instances
+# AWS database instance
 #
 ##
 
@@ -72,4 +72,181 @@ resource "aws_db_instance" "demo" {
   # Maintenance window is after backup window, and on Sunday, and in the middle of the night.
   maintenance_window = "sun:09:00-sun:10:00"
 
+}
+
+##
+#
+# Database instance a.k.a. database object
+#
+##
+
+# The "owner" role has full permissions.
+variable "postgresql_role__owner__name" {
+  default = "owner"
+}
+
+variable "postgresql_role__owner__password" {
+  default = "secret"
+}
+
+# The "deployer" role is intended for releases, migrations, etc.
+variable "postgresql_role__deployer__name" {
+  default = "deployer"
+}
+
+variable "postgresql_role__deployer__password" {
+  default = "secret"
+}
+
+# The "reader" role is intended for read-only actions.
+variable "postgresql_role__reader__name" {
+  default = "reader"
+}
+
+variable "postgresql_role__reader__password" {
+  default = "secret"
+}
+
+variable "postgresql_database__name" {
+  default = "demo"
+}
+
+# Equivalent SQL:
+#
+#     CREATE ROLE 'owner' WITH LOGIN 
+#     ENCRYPTED PASSWORD 'secret';
+#
+resource "postgresql_role" "owner" {
+  name     = var.postgresql_role__owner__name
+  password = var.postgresql_role__owner__password
+  login    = true
+  replication = true
+  connection_limit = -1
+}
+
+# Equivalent SQL:
+#
+#     CREATE ROLE 'deployer' WITH LOGIN 
+#     ENCRYPTED PASSWORD 'secret';
+#
+resource "postgresql_role" "deployer" {
+  name     = var.postgresql_role__deployer__name
+  password = var.postgresql_role__deployer__password
+  login    = true
+  replication = true
+  connection_limit = -1
+}
+
+# Equivalent SQL:
+#
+#     CREATE ROLE 'reader' WITH LOGIN 
+#     ENCRYPTED PASSWORD 'secret';
+#
+resource "postgresql_role" "reader" {
+  name     = var.postgresql_role__reader__name
+  password = var.postgresql_role__reader__password
+  login    = true
+  replication = true
+  connection_limit = -1
+}
+
+# Equivalent SQL:
+#
+#     CREATE SCHEMA 'public';
+#
+resource "postgresql_schema" "public" {
+  name = "public"
+  owner = "postgres"
+
+  # The "owner" role can do everything.
+  # This is the role that has full access.
+  policy {
+    create_with_grant = true
+    usage_with_grant  = true
+    role              = "${postgresql_role.owner.name}"
+  }
+
+  # The "deployer" role can create new objects in the schema
+  # This is the role that runs releases, migrations, etc.
+  policy {
+    create_with_grant = true
+    usage_with_grant  = true
+    role   = "${postgresql_role.deployer.name}"
+  }
+
+  # The "reader" role can read everything by default.
+  # This is the role that must never has write access.
+  policy {
+    usage = true
+    role  = "${postgresql_role.reader.name}"
+  }
+
+}
+
+# Equivalent SQL:
+#
+#     CREATE DATABASE demo;
+#
+resource "postgresql_database" "demo" {
+  name              = var.postgresql_database__name
+  owner             = var.postgresql_role__name
+  template          = "template0"
+  encoding          = "UTF8"
+  lc_collate        = "C"
+  lc_ctype          = "C"
+  connection_limit  = 1
+  allow_connections = true
+}
+
+# Equivalent SQL:
+#
+#     GRANT ALL ON DATABASE 'demo' TO 'owner';
+#
+resource "postgresql_grant" "owner" {
+  database    = var.postgresql_database__name
+  role        = var.postgresql_role__owner__name
+  schema      = "public"
+  object_type = "database"
+  privileges  = ["ALL"]
+}
+
+# Equivalent SQL:
+#
+#     GRANT ALL ON DATABASE 'demo' TO 'deployer';
+#
+resource "postgresql_grant" "deployer" {
+  database    = var.postgresql_database__name
+  role        = var.postgresql_role__deployer__name
+  schema      = "public"
+  object_type = "database"
+  privileges  = ["ALL"]
+}
+
+# Equivalent SQL:
+#
+#     GRANT SELECT ON ALL TABLES
+#     IN SCHEMA public
+#     TO reader;
+#
+resource "postgresql_grant" "reader" {
+  database    = var.postgresql_database__name
+  role        = var.postgresql_role__reader__name
+  schema      = "public"
+  object_type = "table"
+  privileges  = ["SELECT"]
+}
+
+# Equivalent SQL:
+#
+#     ALTER DEFAULT PRIVILEGES
+#     IN SCHEMA public
+#     GRANT SELECT ON TABLES TO reader;
+#
+resource "postgresql_default_privileges" "reader" {
+  database = var.postgresql_database__name
+  role     = var.postgresql_role__reader__name
+  schema   = "public"
+  owner       = var.postgresql_role__reader__name
+  object_type = "table"
+  privileges  = ["SELECT"]
 }
